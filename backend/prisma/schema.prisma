@@ -46,7 +46,7 @@ model Municipality {
   code           String @unique
   notaryOfficeId String
 
-  notaryOffice NotaryOffice? @relation(fields: [notaryOfficeId], references: [id])
+  NotaryOffice NotaryOffice? @relation(fields: [notaryOfficeId], references: [id])
   VotingPlace  VotingPlace[]
 }
 
@@ -99,9 +99,8 @@ model VotingPlace {
   NotaryOffice NotaryOffice @relation("OfficeVotingPlaces", fields: [notaryOfficeId], references: [id], onDelete: Cascade)
 
   // RELAÇÕES DE DESTINO
-  transmitToVotingPlace VotingPlace?  @relation("VPtoVP", fields: [transmitToVotingPlaceId], references: [id])
   transmittedFromVPs    VotingPlace[] @relation("VPtoVP")
-
+  transmitToVotingPlace VotingPlace?  @relation("VPtoVP", fields: [transmitToVotingPlaceId], references: [id])
   transmitToNotaryOffice NotaryOffice? @relation("TransmissionToOffice", fields: [transmitToNotaryOfficeId], references: [id])
 
   @@index([municipalityId])

@@ -12,7 +12,16 @@ export async function createVotingPlace(req, res) {
       sections,
       voters,
       notaryOfficeId,
+      isTransmissionPoint,
+      transmissionOperator,
+      transmissionPointKit,
+      transmissionPointKitPassword,
+      transmitToVotingPlaceId,
+      transmitToNotaryOfficeId,
     } = req.body;
+
+    console.log(req.body);
+
     const votingPlace = await prisma.votingPlace.create({
       data: {
         code,
@@ -21,6 +30,12 @@ export async function createVotingPlace(req, res) {
         complement,
         sections,
         voters,
+
+        isTransmissionPoint,
+        transmissionOperator,
+        transmissionPointKit,
+        transmissionPointKitPassword,
+
         Address: {
           connect: { id: await getAddressId(req.body.address) },
         },
@@ -34,6 +49,18 @@ export async function createVotingPlace(req, res) {
             id: notaryOfficeId,
           },
         },
+        ...(isTransmissionPoint == false && {
+          ...(transmitToVotingPlaceId != null && {
+            transmitToVotingPlace: {
+              connect: { id: transmitToVotingPlaceId },
+            },
+          }),
+          ...(transmitToVotingPlaceId == null && {
+            transmitToNotaryOffice: {
+              connect: { id: transmitToNotaryOfficeId },
+            },
+          }),
+        }),
       },
     });
     res.status(201).json(votingPlace);

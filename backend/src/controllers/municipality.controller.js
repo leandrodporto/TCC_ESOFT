@@ -7,7 +7,7 @@ export async function createMunicipality(req, res) {
       data: {
         name,
         code,
-        notaryOffice: {
+        NotaryOffice: {
           connect: {
             id: notaryOfficeId,
           },
@@ -53,7 +53,7 @@ export async function updateMunicipality(req, res) {
       data: {
         name,
         code,
-        notaryOffice: {
+        NotaryOffice: {
           connect: {
             id: notaryOfficeId,
           },
