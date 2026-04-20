@@ -1,0 +1,11 @@
+node_modules
+.env
+/generated/prisma
+*.log
+package-lock.json
+scripts
+vscode
+backend
+docs
+.vscode
+.idea
