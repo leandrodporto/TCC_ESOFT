@@ -60,10 +60,10 @@ export default function Routers({ onLogout, user }) {
 
   const calculateRoute = async (route) => {
     try {
-      const response = await api.post("/routes", route);
+      const response = await api.post("/routers", route);
      if (response.status === 201) {
         setError("");
-        const fetchResponse = await api.get("/routes");
+        const fetchResponse = await api.get("/routers");
         const nextRoutes = Array.isArray(fetchResponse.data)
           ? fetchResponse.data.map((route) => ({
               ...route,
@@ -83,7 +83,7 @@ export default function Routers({ onLogout, user }) {
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
-        const response = await api.get("/routes");
+        const response = await api.get("/routers");
         const nextRoutes = Array.isArray(response.data)
           ? response.data.map((route) => ({
               ...route,

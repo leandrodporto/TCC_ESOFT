@@ -5,22 +5,22 @@
   <img src="https://img.shields.io/badge/Prisma-PostgreSQL-0891b2?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
 </p>
 
-<h1 align="center">Sistema de Gestao de Logistica Eleitoral</h1>
+<h1 align="center">Sistema de Gestão de Logística Eleitoral</h1>
 
 <p align="center">
-  Planejamento de pontos de transmissao, cartorios e locais de votacao com mapa interativo e calculo de rotas.
+  Planejamento de pontos de transmissão, cartórios e locais de votação com mapa interativo e calculo de rotas.
 </p>
 
 ---
 
-## Visao geral
+## Visão geral
 
-Este repositorio contem duas aplicacoes:
+Este repositório contem duas aplicações:
 
-- `backend`: API REST em Express com persistencia via Prisma + PostgreSQL.
-- `frontend`: SPA em React + Vite com visualizacao em mapa (Leaflet).
+- `backend`: API REST em Express com persistência via Prisma + PostgreSQL.
+- `frontend`: SPA em React + Vite com visualização em mapa (Leaflet).
 
-A proposta e centralizar dados operacionais (usuarios, municipios, cartorios, locais de votacao e rotas), com suporte a geocodificacao e integracoes externas para calculo de distancias.
+A proposta e centralizar dados operacionais (usuários, municípios, cartórios, locais de votação e rotas), com suporte a geocodificação e integrações externas para calculo de distancias.
 
 ## Arquitetura em 30 segundos
 
@@ -38,14 +38,14 @@ flowchart LR
     FE --> MAP[Leaflet / React-Leaflet]
 ```
 
-## Stack tecnica
+## Stack técnica
 
 | Camada      | Tecnologias                                                                   |
 | ----------- | ----------------------------------------------------------------------------- |
 | Frontend    | React 19, Vite 8, React Router 7, Leaflet, Axios                              |
 | Backend     | Node.js, Express 5, Prisma 7, JWT, bcrypt                                     |
 | Banco       | PostgreSQL                                                                    |
-| Integracoes | ViaCEP, BrasilAPI, AwesomeAPI, Google Geocoding, Google Distance Matrix, OSRM |
+| Integrações | ViaCEP, BrasilAPI, AwesomeAPI, Google Geocoding, Google Distance Matrix, OSRM |
 
 ## Estrutura do projeto
 
@@ -67,7 +67,7 @@ TCC_ESOFT/
 
 ## Como rodar localmente
 
-### 1) Instalar dependencias
+### 1) Instalar dependencies
 
 ```bash
 cd backend
@@ -77,7 +77,7 @@ cd ../frontend
 npm install
 ```
 
-### 2) Configurar variaveis de ambiente
+### 2) Configurar variáveis de ambiente
 
 Backend (`backend/.env`):
 
@@ -94,7 +94,7 @@ VITE_API_BASE_URL=http://localhost
 VITE_API_PORT=3000
 ```
 
-### 3) Rodar migracoes do banco
+### 3) Rodar migrações do banco
 
 ```bash
 cd backend
@@ -127,19 +127,19 @@ npm run dev
 
 ## Telas principais
 
-- Dashboard de operacao
-- Gestao de municipios
-- Gestao de cartorios
-- Gestao de locais de votacao
-- Gestao de usuarios
-- Visao de rotas
+- Dashboard de operação
+- Gestão de municípios
+- Gestão de cartórios
+- Gestão de locais de votação
+- Gestão de usuários
+- Visão de rotas
 
-## Firulas tecnicas
+## Firulas técnicas
 
 - Queda elegante no calculo de distancias: Google Distance Matrix -> OSRM -> Haversine.
-- Persistencia com Prisma Adapter para PostgreSQL.
-- Mapa com fluxo visual de pontos, secoes e eleitores.
+- Persistência com Prisma Adapter para PostgreSQL.
+- Mapa com fluxo visual de pontos, seções e eleitores.
 
 ---
 
-Feito para apoiar operacao eleitoral com foco em rastreabilidade, velocidade e clareza no campo.
+Feito para apoiar operação eleitoral com foco em rastreabilidade, velocidade e clareza no campo.
