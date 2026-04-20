@@ -5,3 +5,7 @@ node_modules
 package-lock.json
 scripts
 vscode
+backend
+docs
+.vscode
+.idea
