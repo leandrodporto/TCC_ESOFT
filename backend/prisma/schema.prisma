@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserType {
+  ROOT
+  ADMIN // Administradores 
+  NOTARYBOSS // Chefe de Cartório
+  TECHNICAL // Técnico Judiciários
+  LOGISTICS // Informalmente "roteiristas".
+  DRIVER // Motoristas
+  TRAINEE // Estagiários
+}
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  name           String
+  phone          String
+  streetNumber   Int?
+  complement     String?
+  notaryOfficeId String?
+  addressId      String?
+  userType       UserType
+
+  Auth         Auth?
+  NotaryOffice NotaryOffice? @relation(fields: [notaryOfficeId], references: [id])
+  Address      Address?      @relation(fields: [addressId], references: [id])
+}
+
+model Auth {
+  id       String @id @default(uuid())
+  userId   String @unique
+  password String
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Municipality {
+  id             String @id @default(uuid())
+  name           String
+  code           String @unique
+  notaryOfficeId String
+
+  NotaryOffice NotaryOffice? @relation(fields: [notaryOfficeId], references: [id])
+  VotingPlace  VotingPlace[]
+}
+
+model NotaryOffice {
+  id           String  @id @default(uuid())
+  zone         String
+  name         String
+  phone        String
+  streetNumber Int?
+  complement   String?
+  addressId    String
+
+  isTransmissionPoint          Boolean? @default(false)
+  transmissionOperator         String?
+  transmissionPointKit         String?
+  transmissionPointKitPassword String?
+
+  Address         Address        @relation(fields: [addressId], references: [id])
+  User            User[]
+  Municipality    Municipality[]
+  VotingPlace     VotingPlace[]  @relation("OfficeVotingPlaces")
+  TransmittingVPs VotingPlace[]  @relation("TransmissionToOffice")
+
+  @@index([isTransmissionPoint])
+}
+
+model VotingPlace {
+  id             String   @id @default(uuid())
+  code           Int      @unique
+  name           String
+  addressId      String
+  municipalityId String
+  streetNumber   Int?
+  complement     String?
+  sections       String[]
+  voters         Int
+  notaryOfficeId String
+
+  // DESTINO DE TRANSMISSÃO
+  transmitToVotingPlaceId  String?
+  transmitToNotaryOfficeId String?
+
+  isTransmissionPoint          Boolean? @default(false)
+  transmissionOperator         String?
+  transmissionPointKit         String?
+  transmissionPointKitPassword String?
+
+  Address      Address      @relation(fields: [addressId], references: [id])
+  Municipality Municipality @relation(fields: [municipalityId], references: [id])
+  NotaryOffice NotaryOffice @relation("OfficeVotingPlaces", fields: [notaryOfficeId], references: [id], onDelete: Cascade)
+
+  // RELAÇÕES DE DESTINO
+  transmittedFromVPs    VotingPlace[] @relation("VPtoVP")
+  transmitToVotingPlace VotingPlace?  @relation("VPtoVP", fields: [transmitToVotingPlaceId], references: [id])
+  transmitToNotaryOffice NotaryOffice? @relation("TransmissionToOffice", fields: [transmitToNotaryOfficeId], references: [id])
+
+  @@index([municipalityId])
+  @@index([transmitToVotingPlaceId])
+  @@index([transmitToNotaryOfficeId])
+}
+
+model Address {
+  id           String @id @default(uuid())
+  zipCode      String
+  street       String
+  neighborhood String
+  city         String
+  state        String
+  country      String @default("Brasil")
+
+  User         User[]
+  VotingPlace  VotingPlace[]
+  NotaryOffice NotaryOffice[]
+}
