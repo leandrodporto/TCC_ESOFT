@@ -5,7 +5,6 @@
   <img src="https://img.shields.io/badge/Prisma-PostgreSQL-0891b2?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
 </p>
 
-<img src= "https://raw.githubusercontent.com/leandrodporto/TCC_ESOFT/refs/heads/main/frontend/src/assets/img/logo.webp" alt="Logo do Projeto com nome Origin"
 <h1 align="center">ORION- Sistema de Orientação e Roteirização Inteligente</h1>
 
 <p align="center">
