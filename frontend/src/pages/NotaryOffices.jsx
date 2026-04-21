@@ -191,6 +191,8 @@ export default function NotaryOffices({ onLogout, user }) {
               neighborhood: addressData.neighborhood,
               city: addressData.city,
               state: addressData.state,
+              country: addressData.country,
+              zipCode: cep,
             },
           }));
         }

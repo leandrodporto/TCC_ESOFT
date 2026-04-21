@@ -10,7 +10,7 @@ const createAddress = async (address) => {
         city,
         street,
         state,
-        zipCode,
+        zipCode: zipCode.replace(/\D/g, ""),
         neighborhood,
         country,
 
@@ -47,16 +47,9 @@ const getAddressById = async (id) => {
 
 const updateAddress = async (id, data) => {
   try {
-    const { city, street, state, zipCode, neighborhood, country, complement } =
-      await sanitizer([
-        data.city,
-        data.street,
-        data.state,
-        data.zipCode,
-        data.neighborhood,
-        data.country,
-        data.complement,
-      ]);
+    const { city, street, state, zipCode, neighborhood, country, complement } =  data;
+        
+      
 
     const address = await prisma.address.update({
       where: { id },
@@ -64,7 +57,7 @@ const updateAddress = async (id, data) => {
         city,
         street,
         state,
-        zipCode,
+        zipCode: zipCode.replace(/\D/g, ""),
         neighborhood,
         country,
         complement,
@@ -89,7 +82,7 @@ const deleteAddress = async (id) => {
 const getAddressByZipCode = async (zipCode) => {
   try {
     const addresses = await prisma.address.findMany({
-      where: { zipCode },
+      where: { zipCode: zipCode.replace(/\D/g, "") },
     });
 
     if (!addresses || addresses.length === 0) {

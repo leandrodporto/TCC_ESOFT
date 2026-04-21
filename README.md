@@ -5,7 +5,8 @@
   <img src="https://img.shields.io/badge/Prisma-PostgreSQL-0891b2?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
 </p>
 
-<h1 align="center">Sistema de Gestão de Logística Eleitoral</h1>
+<img src= "https://raw.githubusercontent.com/leandrodporto/TCC_ESOFT/refs/heads/main/frontend/src/assets/img/logo.webp" alt="Logo do Projeto com nome Origin"
+<h1 align="center">ORION- Sistema de Orientação e Roteirização Inteligente</h1>
 
 <p align="center">
   Planejamento de pontos de transmissão, cartórios e locais de votação com mapa interativo e calculo de rotas.
@@ -85,6 +86,7 @@ Backend (`backend/.env`):
 PORT=3000
 DATABASE_URL=postgresql://usuario:senha@localhost:5432/tcc_esoft
 JWT_SECRET=sua_chave_aqui
+GOOGLE_API_KEY
 ```
 
 Frontend (`frontend/.env`):
@@ -92,6 +94,7 @@ Frontend (`frontend/.env`):
 ```env
 VITE_API_BASE_URL=http://localhost
 VITE_API_PORT=3000
+VITE_GOOGLE_MAPS_API_KEY
 ```
 
 ### 3) Rodar migrações do banco
@@ -99,6 +102,7 @@ VITE_API_PORT=3000
 ```bash
 cd backend
 npx prisma migrate dev
+npx prisma generate
 ```
 
 ### 4) Subir backend e frontend

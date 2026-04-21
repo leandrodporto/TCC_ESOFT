@@ -37,9 +37,9 @@ export async function getNotaryOfficeById(req, res) {
   try {
     const { id } = req.params;
     const notaryOffice = await prisma.notaryOffice.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: id },
       include: {
-        address: true,
+        Address: true,
       },
     });
     if (!notaryOffice) {
@@ -56,7 +56,7 @@ export async function updateNotaryOffice(req, res) {
     const { id } = req.params;
     const { zone, name, phone } = req.body;
     const notaryOffice = await prisma.notaryOffice.update({
-      where: { id: parseInt(id) },
+      where: { id:  id },
       data: {
         zone,
         name,
@@ -76,7 +76,7 @@ export async function deleteNotaryOffice(req, res) {
   try {
     const { id } = req.params;
     await prisma.notaryOffice.delete({
-      where: { id: parseInt(id) },
+      where: { id: id },
     });
     res.status(204).send();
   } catch (error) {

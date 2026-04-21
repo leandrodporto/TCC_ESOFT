@@ -33,8 +33,8 @@ export async function getMunicipalityById(req, res) {
   try {
     const { id } = req.params;
     const municipality = await prisma.municipality.findUnique({
-      where: { id: parseInt(id) },
-    });
+      where: { id: id },
+    }); 
     if (!municipality) {
       return res.status(404).json({ error: "Municipality not found" });
     }
@@ -49,7 +49,7 @@ export async function updateMunicipality(req, res) {
     const { id } = req.params;
     const { name, code, notaryOfficeId } = req.body;
     const municipality = await prisma.municipality.update({
-      where: { id: parseInt(id) },
+      where: { id: id },
       data: {
         name,
         code,
@@ -70,7 +70,7 @@ export async function deleteMunicipality(req, res) {
   try {
     const { id } = req.params;
     await prisma.municipality.delete({
-      where: { id: parseInt(id) },
+      where: { id: id },
     });
     res.status(204).send();
   } catch (error) {

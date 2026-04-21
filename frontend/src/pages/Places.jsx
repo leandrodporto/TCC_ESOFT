@@ -153,7 +153,7 @@ export default function Places({ onLogout, user }) {
               neighborhood: addressData.neighborhood,
               city: addressData.city,
               state: addressData.state,
-              zipCode: addressData.zipCode,
+              zipCode: addressData.zipCode.replace(/\D/g, ""),
               country: addressData.country,
             },
           }));
@@ -226,7 +226,6 @@ export default function Places({ onLogout, user }) {
     setSaving(true);
     setError("");
     setSuccess("");
-  console.log(formData.address);
     try {
       const payload = {
         ...formData,

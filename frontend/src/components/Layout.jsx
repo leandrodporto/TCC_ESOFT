@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
+import { Loading } from "./Loading";
 
-export default function Layout({ title, subtitle, children, onLogout, user }) {
+export default function Layout({ title, subtitle, children, onLogout, user, loading = false }) {
   return (
     <div className="page-shell">
       <Navbar onLogout={onLogout} user={user} />
@@ -10,6 +11,7 @@ export default function Layout({ title, subtitle, children, onLogout, user }) {
         {subtitle ? <p className="page-subtitle">{subtitle}</p> : null}
       </header>
       <main className="page-content">{children}</main>
+      {loading && <Loading />}
     </div>
   );
 }

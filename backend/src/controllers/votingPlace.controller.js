@@ -12,6 +12,8 @@ export async function createVotingPlace(req, res) {
       sections,
       voters,
       notaryOfficeId,
+      lat,
+      lng,
       isTransmissionPoint,
       transmissionOperator,
       transmissionPointKit,
@@ -30,7 +32,8 @@ export async function createVotingPlace(req, res) {
         complement,
         sections,
         voters,
-
+        lat,
+        lng,
         isTransmissionPoint,
         transmissionOperator,
         transmissionPointKit,
@@ -49,18 +52,6 @@ export async function createVotingPlace(req, res) {
             id: notaryOfficeId,
           },
         },
-        ...(isTransmissionPoint == false && {
-          ...(transmitToVotingPlaceId != null && {
-            transmitToVotingPlace: {
-              connect: { id: transmitToVotingPlaceId },
-            },
-          }),
-          ...(transmitToVotingPlaceId == null && {
-            transmitToNotaryOffice: {
-              connect: { id: transmitToNotaryOfficeId },
-            },
-          }),
-        }),
       },
     });
     res.status(201).json(votingPlace);
@@ -83,7 +74,7 @@ export async function getVotingPlaceById(req, res) {
   try {
     const { id } = req.params;
     const votingPlace = await prisma.votingPlace.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: id },
     });
     if (!votingPlace) {
       return res.status(404).json({ error: "Voting place not found" });
@@ -106,9 +97,12 @@ export async function updateVotingPlace(req, res) {
       voters,
       notaryOfficeId,
       municipalityId,
+      lat,
+      lng
+
     } = req.body;
     const votingPlace = await prisma.votingPlace.update({
-      where: { id: parseInt(id) },
+      where: { id: id },
       data: {
         name,
         code,
@@ -116,6 +110,8 @@ export async function updateVotingPlace(req, res) {
         complement,
         sections,
         voters,
+        lat,
+        lng,
         NotaryOffice: {
           connect: {
             id: notaryOfficeId,
@@ -124,7 +120,7 @@ export async function updateVotingPlace(req, res) {
         Address: {
           connect: { id: await getAddressId(req.body.address) },
         },
-        municipality: {
+        Municipality: {
           connect: {
             id: municipalityId,
           },
@@ -141,7 +137,7 @@ export async function deleteVotingPlace(req, res) {
   try {
     const { id } = req.params;
     await prisma.votingPlace.delete({
-      where: { id: parseInt(id) },
+      where: { id: id },
     });
     res.status(204).send();
   } catch (error) {

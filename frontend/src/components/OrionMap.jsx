@@ -22,7 +22,23 @@ const OrionMap = ({ data = {} }) => {
   // Centro aproximado de Araucária
   const position = [-25.594, -49.395];
 
-  const colors = ["#ff0000", "#0000ff", "#008000"];
+  const routeColors = [
+    "#000000",
+    "#1E88E5",
+    "#E53935",
+    "#43A047",
+    "#8E24AA",
+    "#FB8C00",
+    "#00ACC1",
+    "#6D4C41",
+    "#3949AB",
+    "#D81B60",
+    "#00897B",
+  ];
+
+  function getRouteColor(index) {
+    return routeColors[index % routeColors.length];
+  }
 
   return (
     <MapContainer
@@ -70,7 +86,7 @@ const OrionMap = ({ data = {} }) => {
         <RoutingMachine
           key={`route-${index}`}
           waypoints={route}
-          color={colors[index % colors.length]}
+          color={getRouteColor(index)}
         />
       ))}
     </MapContainer>

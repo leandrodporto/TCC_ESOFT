@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import OrionMap from "../components/OrionMap";
 import api from "../services/api";
+import { Loading } from "../components/Loading";
 
 function normalizeRouteData(routerData) {
   if (!Array.isArray(routerData)) {
@@ -56,20 +57,25 @@ export default function Routers({ onLogout, user }) {
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [loadingRoute, setLoadingRoute] = useState(false);
 
 
   const calculateRoute = async (route) => {
     try {
       const response = await api.post("/routers", route);
+      setLoadingRoute(true);
      if (response.status === 201) {
         setError("");
         const fetchResponse = await api.get("/routers");
+        setLoadingRoute(true);
         const nextRoutes = Array.isArray(fetchResponse.data)
           ? fetchResponse.data.map((route) => ({
               ...route,
               routerData: normalizeRouteData(route.routerData),
             }))
           : [];
+
+          setLoadingRoute(false);
         setRoutes(nextRoutes);
       } else {
         setError("Nao foi possível calcular a rota.");
@@ -128,6 +134,7 @@ export default function Routers({ onLogout, user }) {
       subtitle="Geração e visualização de rotas para os veículos."
       onLogout={onLogout}
       user={user}
+      loading={loadingRoute}
     >
       <section className="hero-card">
         <div className="hero-copy">
@@ -173,9 +180,6 @@ export default function Routers({ onLogout, user }) {
         </div>
       </section>
 
-      {loading ? (
-        <section className="panel">Carregando rotas...</section>
-      ) : null}
       {error ? <section className="alert error">{error}</section> : null}
 
       {!loading && !error && routes.length === 0 ? (

@@ -2,8 +2,7 @@ export default async function searchCep(cep) {
 
   const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
   const data = await res.json(); 
-  console.log(data);
-
+  
   if (!data.erro) {
     return {
       street : data.logradouro,
